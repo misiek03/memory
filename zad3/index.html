@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+</head>
+<body>
+    <div class="tab">
+    <table>
+        <tr>
+            <td>
+                <div class="card-1"></div>
+            </td>
+            <td>
+                <div class="card-2"></div>
+            </td>
+            <td>
+                <div class="card-3"></div>
+            </td>
+            <td>
+                <div class="card-4"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="card-5"></div>
+            </td>
+            <td>
+                <div class="card-6"></div>
+            </td>
+            <td>
+                <div class="card-7"></div>
+            </td>
+            <td>
+                <div class="card-8"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="card-9"></div>
+            </td>
+            <td>
+                <div class="card-10"></div>
+            </td>
+            <td>
+                <div class="card-11"></div>
+            </td>
+            <td>
+                <div class="card-12"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="card-13"></div>
+            </td>
+            <td>
+                <div class="card-14"></div>
+            </td>
+            <td>
+                <div class="card-15"></div>
+            </td>
+            <td>
+                <div class="card-16"></div>
+            </td>
+        </tr>
+    </table>
+    </div>
+
+    <div class="gameBtns">
+        <div class="time">10:00</div>
+        <div class="play">Graj</div>
+        <div class="points">Pkt: 0</div>
+    </div>
+
+    <script>
+        const divTime = document.querySelector('.time');
+        const divPlay = document.querySelector('.play');
+        const divPoints = document.querySelector('.points');
+
+        const cards = Array.from(document.querySelectorAll('div[class*="card"]')); 
+        const imgNames = ['android', 'babcia', 'cr7', 'kot', 'lamy', 'leosia', 'random', 'shrek'];
+        const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ,15, 16];
+        let random;
+
+        const time = () => {
+            var countDown = new Date(Date.now() + (600 * 1000));
+            let x = setInterval(function() {
+                var now = new Date().getTime();
+                var distance = countDown - now;
+
+                var mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+                divTime.innerHTML = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+                if (distance < 0) {
+                    clearInterval(x);
+                    divTime.innerHTML = `00:00`;
+                }
+            }, 1000);
+        }
+
+        const start = () => {
+            const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ,15, 16];
+            let random;
+            
+            for(let i=0; i < 8; i++) {
+                random = Math.floor(Math.random() * numbers.length);
+                number = numbers[random];
+                cards[number-1].style.backgroundImage = `url(galeria/${imgNames[i]}.jpg)`;
+                numbers.splice(random, 1);
+                random = Math.floor(Math.random() * numbers.length);
+                number = numbers[random];
+                cards[number-1].style.backgroundImage = `url(galeria/${imgNames[i]}.jpg)`;
+                numbers.splice(random, 1);
+            }
+
+            setTimeout(function() {
+                cards.forEach(card => {
+                    card.classList.add('start');
+                });
+                time();
+            }, 1000);   
+        }
+
+        const check = (e) => {
+            console.log(e.path[0]);
+        }
+
+        divPlay.addEventListener('click', start)
+        cards.forEach(card => card.addEventListener('click', check));
+
+        // cards.forEach(card => card.addEventListener('click', function() {
+        //     console.log(+card.getAttribute('class').substr(5));
+
+        // }));
+    </script>
+</body>
+</html>

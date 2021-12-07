@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ćwiczenia</title>
+
+    <style>
+        div {
+            background-color: rgba(0, 0, 0, 0.8);
+            width: 300px;
+            height: 100px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    Imię i nazwisko: <br>
+    <div id="name"></div> <br>
+    <button id="name-btn">Podaj słowo</button>
+
+    <br> <br>
+
+    <input type="text">
+    <button id="szyfr-btn">SZYFRUJ</button>
+    <button id="deszyfr-btn">DESZYFRUJ</button>
+    <input type="text">
+    <script>
+        const btnName = document.querySelector('#name-btn');
+        const div = document.querySelector('#name');
+        const btnSzyfr = document.querySelector('#szyfr-btn');
+        const btnDeszyfr = document.querySelector('#deszyfr-btn');
+        const inputs = document.querySelectorAll('input');
+        const input1 = inputs[0];
+        const input2 = inputs[1];
+
+        console.log(input1, input2)
+        
+        const nameFunction = () => {
+            let word = prompt("Podaj imie: ");
+            let name = word.split(" ");
+            let firstName = name[0].charAt(0).toUpperCase() + name[0].substr(1).toLowerCase();
+            let secondName = name[1].charAt(0).toUpperCase() + name[1].substr(1).toLowerCase();
+            div.innerHTML = `${firstName} ${secondName}`;
+        }
+
+        function encryption() {
+            let text = input1.value.split("");
+            let temp = "";
+            text.forEach(char => {
+                temp += char.charCodeAt() + ",";
+            })
+            input1.value = temp;
+        }
+
+        function decryption() {
+            let text = input1.value.split(",");
+            let temp = "";
+            for(let i = 0; i < text.length-1; i++)
+            {
+                console.log(text[i]);
+                temp += String.fromCharCode(text[i]);
+            }
+            input1.value = temp;
+        }
+
+
+        btnSzyfr.addEventListener('click', encryption);
+        btnDeszyfr.addEventListener('click', decryption);
+        btnName.addEventListener('click', nameFunction);
+
+
+       
+    </script>
+</body>
+</html>
